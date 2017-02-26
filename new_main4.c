@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "fractol.h"
 #include <math.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -279,10 +279,10 @@ int		ft_draw_pix(t_env *list)
 
 void	ft_verif(char *fract, t_env *list)
 {
-	list->i = (ft_strcmp(fract, "julia") == 0) ? 1 : 0;
-	list->i = (ft_strcmp(fract, "mandelbrot") == 0
+	list->i = (ft_strcmp(fract, "Julia") == 0) ? 1 : 0;
+	list->i = (ft_strcmp(fract, "Mandelbrot") == 0
 	&& list->i == 0) ? 2 : list->i;
-	list->i = (ft_strcmp(fract, "cesaro") == 0
+	list->i = (ft_strcmp(fract, "Cesaro") == 0
 	&& list->i == 0) ? 3 : list->i;
 	if (list->i == 0)
 		ft_error(1, fract);
