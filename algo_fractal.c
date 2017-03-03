@@ -3,8 +3,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <unistd.h>
-#define WIDTH 400
-#define HEIGHT 370
+#define WIDTH 1000
+#define HEIGHT 1000
 
 void	ft_pixel_put_image(t_env *list, int x, int y)
 {
@@ -22,8 +22,8 @@ int	ft_mandelbrot(t_env *list)
 	double	x2 = 0.6;
 	double	y1 = -1.2;
 	double	y2 = 1.2;
-	double	image_x = 400;
-	double	image_y = 370;
+	double	image_x = 1000;
+	double	image_y = 1000;
 	double	iteration_max = 500;
 	double	zoom_x = image_x/(x2 - x1);
 	double	zoom_y = image_y/(y2 - y1);
@@ -77,11 +77,13 @@ int			ft_mouse_funct(int button, int x, int y, t_env *list)
 	printf("button = %d et x = %d et y = %d\n", button, x, y);
 	if (button == 1)
 	{
+	// pour recentrer faire une difference avec x et y vis a vis du centre comme ca toute la fractal est decaller
 		list->center_x = x;
 		list->center_y = y;
 	}
 	if (button == 2)
 	{
+	//pour tout reset c'est ici
 		list->b_x = 0;
 		list->b_y = 0;
 		list->b_z = 0;
@@ -93,6 +95,12 @@ int			ft_mouse_funct(int button, int x, int y, t_env *list)
 		list->zoom = 1;
 		list->rainbow = 0;
 	}
+/*	if (button == 4)
+	{
+	}
+	if (button == 5)
+	{
+	}*/
 	return (0);
 }
 
