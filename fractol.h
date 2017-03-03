@@ -17,19 +17,6 @@
 
 void				ft_error(int i, char *str);
 
-typedef struct		s_point
-{
-	double			x;
-	double			y;
-	double			z;
-}					t_point;
-
-typedef	struct		s_pixel
-{
-	double			x;
-	double			y;
-	double 			z;
-}					t_pixel;
 
 typedef struct		s_env
 {
@@ -37,11 +24,6 @@ typedef struct		s_env
 	void			*mlx;
 	void			*win;
 	char			*line;
-	t_point			*p;
-	t_pixel			*tmp;
-	t_pixel			*h;
-	double			xmax;
-	double			ymax;
 	void			*img_ptr;
 	int				width;
 	int				height;

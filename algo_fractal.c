@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #define WIDTH 1000
-#define HEIGHT 1000
+#define HEIGHT 750
 
 void	ft_pixel_put_image(t_env *list, int x, int y)
 {
@@ -23,7 +23,7 @@ int	ft_mandelbrot(t_env *list)
 	double	y1 = -1.2;
 	double	y2 = 1.2;
 	double	image_x = 1000;
-	double	image_y = 1000;
+	double	image_y = 750;
 	double	iteration_max = 500;
 	double	zoom_x = image_x/(x2 - x1);
 	double	zoom_y = image_y/(y2 - y1);
