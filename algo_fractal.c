@@ -24,8 +24,7 @@ void	ft_mandelbrot(t_env *list)
 	double	y2 = 1.2;
 	double	image_x = 400;
 	double	image_y = 370;
-	double	iteration_max = 50;
-// on calcule la taille de l'image :
+	double	iteration_max = 20000;
 	double	zoom_x = image_x/(x2 - x1);
 	double	zoom_y = image_y/(y2 - y1);
 	double	x = 0;
