@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #define WIDTH 1000
-#define HEIGHT 750
+#define HEIGHT 850
+#define CASE1 18
 
 void	ft_pixel_put_image(t_env *list, int x, int y)
 {
@@ -18,45 +19,37 @@ void	ft_pixel_put_image(t_env *list, int x, int y)
 int	ft_mandelbrot(t_env *list)
 {
 // on définit la zone que l'on dessine. Ici, la fractale en entière
-	double	x1 = -2.1;
-	double	x2 = 0.6;
-	double	y1 = -1.2;
-	double	y2 = 1.2;
-	double	image_x = 1000;
-	double	image_y = 750;
-	double	iteration_max = 500;
-	double	zoom_x = image_x/(x2 - x1);
-	double	zoom_y = image_y/(y2 - y1);
-	double	x = 0;
-	double	c_r;
-	double	c_i;
-	double	z_r;
-	double	z_i;
-	double	i;
-	double tmp;
-	
-	while (x < image_x)
+	list->md.x1 = -2.1;
+	list->md.x2 = 0.6;
+	list->md.y1 = -1.2;
+	list->md.y2 = 1.2;
+	list->md.image_x = 1000;
+	list->md.image_y = 750;
+	list->md.zoom_x = list->md.image_x/(list->md.x2 - list->md.x1);
+	list->md.zoom_y = list->md.image_y/(list->md.y2 - list->md.y1);
+	list->md.x = 0;
+	while (list->md.x < list->md.image_x)
 	{
-		double	y = 0;
-    		while (y < image_y)
+		list->md.y = 0;
+    	while (list->md.y < list->md.image_y)
 		{
-			c_r = x / zoom_x + x1;
-			c_i = y / zoom_y + y1;
-			z_r = 0;
-			z_i = 0;
-			i = 0;
-        		while (z_r*z_r + z_i*z_i < 4 && i < iteration_max)
+			list->md.c_r = list->md.x / list->md.zoom_x + list->md.x1;
+			list->md.c_i = list->md.y / list->md.zoom_y + list->md.y1;
+			list->md.z_r = 0;
+			list->md.z_i = 0;
+			list->md.i = 0;
+        	while (list->md.z_r * list->md.z_r + list->md.z_i * list->md.z_i < 4 && list->md.i < list->md.iteration_max)
 			{
-				tmp = z_r;
- 	        		z_r = z_r*z_r - z_i*z_i + c_r;
-        	    		z_i = 2*z_i*tmp + c_i;
-           	 		i++;
+				list->md.tmp = list->md.z_r;
+ 	        	list->md.z_r = list->md.z_r * list->md.z_r - list->md.z_i * list->md.z_i + list->md.c_r;
+        	    list->md.z_i = 2 * list->md.z_i* list->md.tmp + list->md.c_i;
+           	 	list->md.i++;
 			}
-            		if (i == iteration_max)
-				ft_pixel_put_image(list, x, y);
-			y++;
-    		}
-		x++;
+            if (list->md.i == list->md.iteration_max)
+				ft_pixel_put_image(list, list->md.x, list->md.y);
+			list->md.y++;
+    	}
+		list->md.x++;
 	}
 	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);
 	return (0);
@@ -64,9 +57,16 @@ int	ft_mandelbrot(t_env *list)
 
 int			ft_key_funct(int keycode, t_env *list)
 {
+	printf("keycode = %d\n", keycode);
 	list->zoom = (keycode == 67) ? (list->zoom + 0.2) : list->zoom;
 	list->zoom = (keycode == 75 && list->zoom > 0.3) ? (list->zoom - 0.2)
 	: list->zoom;
+		if (keycode == CASE1)
+	{
+		list->md.iteration_max = (list->md.iteration_max > 10) ? list->md.iteration_max - 10 : list->md.iteration_max;
+		list->md.iteration_max = (list->md.iteration_max <= 10 && list->md.iteration_max > 0) ? list->md.iteration_max - 1 : list->md.iteration_max;
+		printf("iteration max = %f\n", list->md.iteration_max);
+	}
 	if (keycode == 53)
 		exit(EXIT_SUCCESS);
 	return (0);
@@ -75,7 +75,7 @@ int			ft_key_funct(int keycode, t_env *list)
 int			ft_mouse_funct(int button, int x, int y, t_env *list)
 {
 	printf("button = %d et x = %d et y = %d\n", button, x, y);
-	if (button == 1)
+/*	if (button == 1)
 	{
 	// pour recentrer faire une difference avec x et y vis a vis du centre comme ca toute la fractal est decaller
 		list->center_x = x;
@@ -94,7 +94,7 @@ int			ft_mouse_funct(int button, int x, int y, t_env *list)
 		list->center_y = -1;
 		list->zoom = 1;
 		list->rainbow = 0;
-	}
+	}*/
 /*	if (button == 4)
 	{
 	}
@@ -111,8 +111,15 @@ int		ft_draw_pix(t_env *list)
 	list->img_ptr = mlx_new_image(list->mlx, WIDTH, HEIGHT);
 	list->adi = mlx_get_data_addr(list->img_ptr, &list->bpp,
 	&list->size_line, &list->endian);
+	/*if (list->i == 1)
+		ft_julia();*/
 	if (list->i == 2)
+	{
+		list->md.iteration_max = 600;
 		ft_mandelbrot(list);
+	}
+	/*else if (list->i == 3)
+		ft_cesaro();*/
 	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);
 	mlx_key_hook(list->win, ft_key_funct, list);
 	mlx_mouse_hook(list->win, ft_mouse_funct, list);
