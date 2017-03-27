@@ -1,4 +1,4 @@
-//Mandelbrot
+//Mandelbrot lol§
 #include "fractol.h"
 #include <math.h>
 #include <stdio.h>
