@@ -6,7 +6,7 @@
 #    By: ecunniet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/13 16:43:23 by ecunniet          #+#    #+#              #
-#    Updated: 2017/03/03 17:40:05 by ecunniet         ###   ########.fr        #
+#    Updated: 2017/03/27 16:37:38 by ecunniet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ POINTH = fractol.h \
 LIB = libft/libft.a
 MLX = -L minilibx_macos/
 CC = gcc
-SRC = ft_error.c algo_fractal.c 
+SRC = ft_error.c algo_fractal.c main.c ft_hook.c
 
 OBJ= $(SRC:%.c=%.o)
 
