@@ -23,15 +23,12 @@
 
 typedef	struct		s_frac
 {
-	double		x1;
-	double		x2;
-	double		y1;
-	double		y2;
 	double		image_x;
 	double		image_y;
+	double		moveX;
+	double		moveY;
 	double		iteration_max;
-	double		zoom_x;
-	double		zoom_y;
+	double		zoom;
 	double		x;
 	double		c_r;
 	double		c_i;

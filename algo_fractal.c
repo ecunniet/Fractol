@@ -13,28 +13,25 @@ void	ft_pixel_put_image(t_env *list, int x, int y, int true)
 }
 void	ft_init(t_env *list)
 {
-	list->md.x1 = -2;
-	list->md.x2 = 0.5;
-	list->md.y1 = -1.25;
-	list->md.y2 = 1.25;
+	list->md.zoom = 1;
+	list->md.moveX = -0.5;
+	list->md.moveY = 0;
 	list->md.image_x = WIDTH;
 	list->md.image_y = HEIGHT;
-	list->md.iteration_max = 600;
+	list->md.iteration_max = 60;
 }
 
+// burningship
 int		ft_mandelbrot(t_env *list)
 {
-
-	list->md.zoom_x = list->md.image_x/(list->md.x2 - list->md.x1);
-	list->md.zoom_y = list->md.image_y/(list->md.y2 - list->md.y1);
 	list->md.x = 0;
 	while (list->md.x < list->md.image_x)
 	{
 		list->md.y = 0;
     	while (list->md.y < list->md.image_y)
 		{
-			list->md.c_r = list->md.x / list->md.zoom_x + list->md.x1;
-			list->md.c_i = list->md.y / list->md.zoom_y + list->md.y1;
+			list->md.c_r = 1.5 * (list->md.x - WIDTH / 2) / (0.5 * list->md.zoom * WIDTH) + list->md.moveX;
+			list->md.c_i = (list->md.y - HEIGHT / 2) / (0.5 * list->md.zoom * HEIGHT) + list->md.moveY;
 			list->md.z_r = 0;
 			list->md.z_i = 0;
 			list->md.i = 0;
