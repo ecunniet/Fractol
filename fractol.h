@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #define WIDTH 1000
-#define HEIGHT 850
+#define HEIGHT 750
 #define CASE1 18
 
 typedef	struct		s_frac
@@ -60,7 +60,7 @@ typedef struct		s_env
 }					t_env;
 
 
-void			ft_pixel_put_image(t_env *list, int x, int y);
+void			ft_pixel_put_image(t_env *list, int x, int y, int true);
 void			ft_init(t_env *list);
 int				ft_mandelbrot(t_env *list);
 int				ft_draw_pix(t_env *list);

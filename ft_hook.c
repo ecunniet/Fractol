@@ -3,10 +3,7 @@
 int			ft_key_funct(int keycode, t_env *list)
 {
 	printf("keycode = %d\n", keycode);
-	list->zoom = (keycode == 67) ? (list->zoom + 0.2) : list->zoom;
-	list->zoom = (keycode == 75 && list->zoom > 0.3) ? (list->zoom - 0.2)
-	: list->zoom;
-		if (keycode == CASE1)
+	if (keycode == CASE1)
 	{
 		list->md.iteration_max = (list->md.iteration_max > 10) ? list->md.iteration_max - 10 : list->md.iteration_max;
 		list->md.iteration_max = (list->md.iteration_max <= 10 && list->md.iteration_max > 0) ? list->md.iteration_max - 1 : list->md.iteration_max;
@@ -25,26 +22,26 @@ int			ft_mouse_funct(int button, int x, int y, t_env *list)
 	// pour recentrer faire une difference avec x et y vis a vis du centre comme ca toute la fractal est decaller
 		list->center_x = x;
 		list->center_y = y;
-	}
+	}*/
 	if (button == 2)
 	{
-	//pour tout reset c'est ici
-		list->b_x = 0;
-		list->b_y = 0;
-		list->b_z = 0;
-		list->angle_x = 15;
-		list->angle_y = 25;
-		list->angle_z = 0;
-		list->center_x = -1;
-		list->center_y = -1;
-		list->zoom = 1;
-		list->rainbow = 0;
-	}*/
-/*	if (button == 4)
+		ft_init(list);
+	}
+	if (button == 4)
 	{
+		list->md.x1 = (x > 500) ? list->md.x1 * 0.95: list->md.x1;
+		list->md.x2 = (x < 500) ? list->md.x2 * 0.95: list->md.x2;
+		list->md.y1 = (y > 375) ? list->md.y1 * 0.95: list->md.y1;
+		list->md.y2 = (y < 375) ? list->md.y2 * 0.95: list->md.y2;
+		printf("x1 = %f, x2 = %f, y1 = %f, y2 = %f\n", list->md.x1, list->md.x2, list->md.y1, list->md.y2);
 	}
 	if (button == 5)
-	{
-	}*/
+	{	
+		list->md.x1 = (x > WIDTH / 2) ? list->md.x1 * 1.05: list->md.x1;
+		list->md.x2 = (x < WIDTH / 2) ? list->md.x2 * 1.05: list->md.x2;
+		list->md.y1 = (y > HEIGHT / 2) ? list->md.y1 * 1.05: list->md.y1;
+		list->md.y2 = (y < HEIGHT / 2) ? list->md.y2 * 1.05: list->md.y2;
+		printf("x1 = %f, x2 = %f, y1 = %f, y2 = %f\n", list->md.x1, list->md.x2, list->md.y1, list->md.y2);
+	}
 	return (0);
 }

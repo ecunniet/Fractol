@@ -1,29 +1,32 @@
-//Mandelbrot lol§
 #include "fractol.h"
 
-void	ft_pixel_put_image(t_env *list, int x, int y)
+void	ft_pixel_put_image(t_env *list, int x, int y, int true)
 {
 	int tmp;
 
 	tmp = (x + (y * WIDTH));
-	if (y >= 0 && x >= 0)
+	if (y >= 0 && x >= 0 && true == 1)
 		*(((int*)list->adi) + tmp) = 0xff23ff + (0x01101100 * list->md.i*255/list->md.iteration_max);
+	else if (true == 0)
+		*(((int*)list->adi) + tmp) = 0x000000;
+
 }
 void	ft_init(t_env *list)
 {
-	list->md.x1 = -0.75;
+	list->md.x1 = -2;
 	list->md.x2 = 0.5;
-	list->md.y1 = -0.625;
-	list->md.y2 = 0.625;
+	list->md.y1 = -1.25;
+	list->md.y2 = 1.25;
 	list->md.image_x = WIDTH;
 	list->md.image_y = HEIGHT;
-	list->md.zoom_x = list->md.image_x/(list->md.x2 - list->md.x1);
-	list->md.zoom_y = list->md.image_y/(list->md.y2 - list->md.y1);
+	list->md.iteration_max = 600;
 }
 
 int		ft_mandelbrot(t_env *list)
 {
-	ft_init(list);
+
+	list->md.zoom_x = list->md.image_x/(list->md.x2 - list->md.x1);
+	list->md.zoom_y = list->md.image_y/(list->md.y2 - list->md.y1);
 	list->md.x = 0;
 	while (list->md.x < list->md.image_x)
 	{
@@ -43,12 +46,28 @@ int		ft_mandelbrot(t_env *list)
            	 	list->md.i++;
 			}
             if (list->md.i != list->md.iteration_max)
-				ft_pixel_put_image(list, list->md.x, list->md.y);
+				ft_pixel_put_image(list, list->md.x, list->md.y, 1);
+			else
+				ft_pixel_put_image(list, list->md.x, list->md.y, 0);
 			list->md.y++;
     	}
 		list->md.x++;
 	}
 	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);
+	return (0);
+}
+
+int ft_choose_fractal(t_env *list)
+{
+	/*if (list->i == 1)
+		ft_julia();*/
+	if (list->i == 2)
+	{
+		ft_init(list);
+		ft_mandelbrot(list);
+	}
+	/*else if (list->i == 3)
+		ft_cesaro();*/
 	return (0);
 }
 
@@ -59,15 +78,7 @@ int		ft_draw_pix(t_env *list)
 	list->img_ptr = mlx_new_image(list->mlx, WIDTH, HEIGHT);
 	list->adi = mlx_get_data_addr(list->img_ptr, &list->bpp,
 	&list->size_line, &list->endian);
-	/*if (list->i == 1)
-		ft_julia();*/
-	if (list->i == 2)
-	{
-		list->md.iteration_max = 600;
-		ft_mandelbrot(list);
-	}
-	/*else if (list->i == 3)
-		ft_cesaro();*/
+	ft_choose_fractal(list);
 	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);
 	mlx_key_hook(list->win, ft_key_funct, list);
 	mlx_mouse_hook(list->win, ft_mouse_funct, list);
