@@ -2,15 +2,25 @@
 
 int			ft_key_funct(int keycode, t_env *list)
 {
-	// printf("keycode = %d\n", keycode);
-	if (keycode == CASE1)
-	{
-		list->md.iteration_max = (list->md.iteration_max > 10) ? list->md.iteration_max - 10 : list->md.iteration_max;
-		list->md.iteration_max = (list->md.iteration_max <= 10 && list->md.iteration_max > 0) ? list->md.iteration_max - 1 : list->md.iteration_max;
-		printf("iteration max = %f\n", list->md.iteration_max);
-	}
-	if (keycode == 53)
-		exit(EXIT_SUCCESS);
+	printf("keycode = %d\n", keycode);
+	list->md.i_max = (keycode == I && list->md.i_max < 500) ?
+	list->md.i_max + 10 : list->md.i_max;
+	list->md.i_max = (keycode == O && list->md.i_max >= 10) ?
+	list->md.i_max - 10 : list->md.i_max;
+	list->md.zoom = (keycode == MORE) ? list->md.zoom *
+	pow(1.001, FPS) : list->md.zoom;
+	list->md.zoom = (keycode == LESS) ? list->md.zoom /
+	pow(1.001, FPS) : list->md.zoom;
+	list->md.moveY = (keycode == UP) ? list->md.moveY - 0.0003 * FPS
+	/ list->md.zoom : list->md.moveY;
+	list->md.moveY = (keycode == DOWN) ? list->md.moveY + 0.0003 * FPS
+	/ list->md.zoom : list->md.moveY;
+	list->md.moveX = (keycode == LEFT) ? list->md.moveX - 0.0003 * FPS
+	/ list->md.zoom : list->md.moveX;
+	list->md.moveX = (keycode == RIGHT) ?list->md.moveX + 0.0003 * FPS
+	/ list->md.zoom : list->md.moveX;
+	printf("iteration max = %f\n", list->md.i_max);
+	(keycode == ESC) ? exit(EXIT_SUCCESS) : 0;
 	return (0);
 }
 
@@ -27,8 +37,7 @@ int			ft_mouse_funct(int button, int x, int y, t_env *list)
 		ft_init(list);
 	if (button == 4)
 	{
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 	
-	/*
+		/*
 		list->md.x1 = (x > 500) ? list->md.x1 * 0.5: list->md.x1;
 		list->md.x2 = (x < 500) ? list->md.x2 * 0.5: list->md.x2;
 		list->md.y1 = (y > 375) ? list->md.y1 * 0.5: list->md.y1;

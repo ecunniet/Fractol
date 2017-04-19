@@ -19,24 +19,33 @@
 #include <unistd.h>
 #define WIDTH 1000
 #define HEIGHT 750
-#define CASE1 18
+#define UP 126
+#define DOWN 125
+#define RIGHT 124
+#define LEFT 123
+#define MORE 24
+#define LESS 27
+#define I 34
+#define O 31
+#define ESC 53
+#define FPS 60
 
 typedef	struct		s_frac
 {
-	double		image_x;
-	double		image_y;
-	double		moveX;
-	double		moveY;
-	double		iteration_max;
-	double		zoom;
-	double		x;
-	double		c_r;
-	double		c_i;
-	double		z_r;
-	double		z_i;
-	double		i;
-	double		tmp;
-	double		y;
+	double			image_x;
+	double			image_y;
+	double			moveX;
+	double			moveY;
+	double			i_max;
+	double			zoom;
+	double			x;
+	double			c_r;
+	double			c_i;
+	double			z_r;
+	double			z_i;
+	double			i;
+	double			tmp;
+	double			y;
 }				t_frac;
 
 typedef struct		s_env
@@ -59,7 +68,7 @@ typedef struct		s_env
 
 void			ft_pixel_put_image(t_env *list, int x, int y, int true);
 void			ft_init(t_env *list);
-int				ft_mandelbrot(t_env *list);
+int				ft_fractal(t_env *list);
 int				ft_draw_pix(t_env *list);
 int				ft_key_funct(int keycode, t_env *list);
 int				ft_mouse_funct(int button, int x, int y, t_env *list);
