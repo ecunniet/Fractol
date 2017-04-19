@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   algo_fractal.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/19 15:41:09 by ecunniet          #+#    #+#             */
+/*   Updated: 2017/04/19 16:47:34 by ecunniet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 void	ft_pixel_put_image(t_env *list, int x, int y, int true)
@@ -21,7 +33,6 @@ void	ft_init(t_env *list)
 	list->md.i_max = 60;
 }
 
-// burningship
 int		ft_fractal(t_env *list)
 {
 	list->md.x = 0;
@@ -60,13 +71,6 @@ int		ft_fractal(t_env *list)
 	return (0);
 }
 
-int ft_choose_fractal(t_env *list)
-{
-	ft_init(list);
-	ft_fractal(list);
-	return (0);
-}
-
 int		ft_draw_pix(t_env *list)
 {
 	list->mlx = mlx_init();
@@ -74,7 +78,8 @@ int		ft_draw_pix(t_env *list)
 	list->img_ptr = mlx_new_image(list->mlx, WIDTH, HEIGHT);
 	list->adi = mlx_get_data_addr(list->img_ptr, &list->bpp,
 	&list->size_line, &list->endian);
-	ft_choose_fractal(list);
+	ft_init(list);
+	ft_fractal(list);
 	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);
 	mlx_key_hook(list->win, ft_key_funct, list);
 	mlx_mouse_hook(list->win, ft_mouse_funct, list);

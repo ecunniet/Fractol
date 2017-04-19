@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ecunniet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/19 18:16:57 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/02/02 21:56:07 by ecunniet         ###   ########.fr       */
+/*   Created: 2017/04/19 15:55:12 by ecunniet          #+#    #+#             */
+/*   Updated: 2017/04/19 16:30:44 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 #define O 31
 #define ESC 53
 #define FPS 60
+#define ONE 18
+#define TWO 19
+#define THREE 20
 
 typedef	struct		s_frac
 {
@@ -66,6 +69,7 @@ typedef struct		s_env
 }					t_env;
 
 
+void			ft_change_fractal(t_env *list, int keycode);
 void			ft_pixel_put_image(t_env *list, int x, int y, int true);
 void			ft_init(t_env *list);
 int				ft_fractal(t_env *list);
