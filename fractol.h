@@ -32,6 +32,36 @@
 #define ONE 18
 #define TWO 19
 #define THREE 20
+#define PAUSE 36
+// mlx defines
+#define KEYPRESSEVENT 2
+#define KEYPRESSMASK (1L << 0)
+#define KEYRELEASEEVENT 3
+#define KEYRELEASEMASK (1L << 1)
+#define BUTTONPRESS 4
+#define BUTTONPRESSMASK (1L << 2)
+#define BUTTONRELEASE 5
+#define BUTTONRELEASEMASK (1L << 3)
+#define MOTIONNOTIFY 6
+#define POINTERMOTIONMASK (1L << 6)
+#define DESTROYNOTIFY 17
+#define STRUCTURENOTIFYMASK (1L << 17)
+
+typedef struct		s_cmd
+{
+	int				pause;
+	int				x0;
+	int				y0;
+	int				on;
+	int				up;
+	int				down;
+	int				right;
+	int				left;
+	int				z_more;
+	int				z_less;
+	int				i_more;
+	int				i_less;
+}					t_cmd;
 
 typedef	struct		s_frac
 {
@@ -49,7 +79,7 @@ typedef	struct		s_frac
 	double			i;
 	double			tmp;
 	double			y;
-}				t_frac;
+}					t_frac;
 
 typedef struct		s_env
 {
@@ -61,15 +91,18 @@ typedef struct		s_env
 	int				endian;
 	char			*adi;
 	double			zoom;
-	char			r_gb;
-	char			r_g_b;
-	char			rg_b;
 	int				i;
-	t_frac			md;
+	t_frac			frac;
+	t_cmd			move;
 }					t_env;
 
-
-void			ft_change_fractal(t_env *list, int keycode);
+int				ft_loop_ok(t_env *list);
+int				ft_key_press(int keycode, t_env *list);
+int				ft_key_release(int keycode, t_env *list);
+int				ft_mouse_motion(int x, int y, t_env *list);
+int				ft_button_press(int button, int x, int y, t_env *list);
+int				ft_button_release(int button, int x, int y, t_env *list);
+int				ft_exit_cross(t_env *list);
 void			ft_pixel_put_image(t_env *list, int x, int y, int true);
 void			ft_init(t_env *list);
 int				ft_fractal(t_env *list);

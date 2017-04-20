@@ -12,6 +12,11 @@
 
 #include "fractol.h"
 
+int		ft_exit_cross(t_env *list)
+{
+	exit(EXIT_SUCCESS);
+}
+
 void		ft_error(int i, char *str)
 {
 	if (i == 1)
