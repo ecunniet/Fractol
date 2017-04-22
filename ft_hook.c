@@ -37,8 +37,8 @@ int			ft_mouse_funct(int button, int x, int y, t_env *list)
 	if (button == 4)
 	{
 		list->frac.zoom *= pow(1.001, FPS);
-		list->frac.moveY -= ((WIDTH / 2) - y) * (0.00003 * FPS / list->frac.zoom) / 10;
-		list->frac.moveX -= ((HEIGHT / 2) - x) * (0.00003 * FPS / list->frac.zoom) / 10;
+		list->frac.moveY -= ((WIDTH / 2) - y) * (0.00003 * FPS / list->frac.zoom) / 8;
+		list->frac.moveX -= ((HEIGHT / 2) - x) * (0.00003 * FPS / list->frac.zoom) / 8;
 	}
 	if (button == 5)
 	{
@@ -51,7 +51,10 @@ int			ft_mouse_funct(int button, int x, int y, t_env *list)
 
 int		ft_loop_ok(t_env *list)
 {
-	list->frac.i_max += (list->move.i_more - list->move.i_less);
+	if (list->frac.i_max > 0)
+		list->frac.i_max += (list->move.i_more - list->move.i_less);
+	if (list->frac.i_max == 0)
+		list->frac.i_max += list->move.i_more;
 	if(list->move.z_more != 0 || list->move.z_less != 0)
 		list->frac.zoom *= ((list->move.z_more * pow(1.001, FPS)) + (list->move.z_less / pow(1.001, FPS)));
 	list->frac.moveY += (list->move.down - list->move.up) * (0.0013 * FPS / list->frac.zoom);
@@ -76,14 +79,14 @@ int		ft_key_press(int keycode, t_env *list)
 
 int		ft_key_release(int keycode, t_env *list)
 {
-	list->move.i_more = (keycode == I) ? 0 : 0;
-	list->move.i_less = (keycode == O) ? 0 : 0;
-	list->move.z_more = (keycode == MORE) ? 0 : 0;
-	list->move.z_less = (keycode == LESS) ? 0 : 0;
-	list->move.up = (keycode == UP) ? 0 : 0;
-	list->move.down = (keycode == DOWN) ? 0 : 0;
-	list->move.right = (keycode == RIGHT) ? 0 : 0;
-	list->move.left = (keycode == LEFT) ? 0 : 0;
+	list->move.i_more = 0;
+	list->move.i_less = 0;
+	list->move.z_more = 0;
+	list->move.z_less = 0;
+	list->move.up = 0;
+	list->move.down = 0;
+	list->move.right = 0;
+	list->move.left = 0;
 	return (0);
 }
 
@@ -91,8 +94,10 @@ int		ft_mouse_motion(int x, int y, t_env *list)
 {
 	if (list->move.on == 1)
 	{
-		list->frac.moveY += (list->move.y0 - y) * (0.00003 * FPS / list->frac.zoom) / 8;
-		list->frac.moveX += (list->move.x0 - x) * (0.00003 * FPS / list->frac.zoom) / 8;
+		list->frac.moveY += (list->move.y0 - y) * (0.00005 * FPS / list->frac.zoom);
+		list->frac.moveX += (list->move.x0 - x) * (0.00005 * FPS / list->frac.zoom);
+		list->move.x0 = x;
+		list->move.y0 = y;
 	}
 	else if (list->i == 1 && list->move.pause == 0)
 	{
