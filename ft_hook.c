@@ -12,6 +12,18 @@
 
 #include "fractol.h"
 
+/*void		ft_music(t_env *list)
+{
+	if (list->music == 0)
+		system("killall afplay");
+	else if (list->i == 1)
+		system("afplay music.mp3 &");
+	else if (list->i == 2)
+		system("afplay music.mp3 &");
+	else
+		system("afplay music.mp3 &");
+}*/
+
 int			ft_key_funct(int keycode, t_env *list)
 {
 	int		tmp;
@@ -21,7 +33,10 @@ int			ft_key_funct(int keycode, t_env *list)
 	list->i = (keycode == TWO) ? 2 : list->i;
 	list->i = (keycode == THREE) ? 3 : list->i;
 	if (list->i != tmp)
+	{
 		ft_init(list);
+		// ft_music(list);
+	}
 	printf("keycode = %d\n", keycode);
 	printf("iteration max = %f\n", list->frac.i_max);
 	if (keycode == PAUSE)

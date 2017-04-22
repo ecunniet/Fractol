@@ -94,6 +94,7 @@ typedef struct		s_env
 	char			*adi;
 	double			zoom;
 	int				i;
+	// int				music;
 	t_frac			frac;
 	t_cmd			move;
 }					t_env;
