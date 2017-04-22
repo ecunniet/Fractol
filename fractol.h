@@ -6,7 +6,7 @@
 /*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:55:12 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/04/19 16:30:44 by ecunniet         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:55:57 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef	struct		s_frac
 	double			i_max;
 	double			zoom;
 	double			x;
+	double			jcr;
+	double			jci;
 	double			c_r;
 	double			c_i;
 	double			z_r;

@@ -6,7 +6,7 @@
 /*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:41:09 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/04/19 16:47:34 by ecunniet         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:58:12 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	ft_init(t_env *list)
 	list->frac.moveY = (list->i == 3) ? -0.5 : 0;
 	list->frac.image_x = WIDTH;
 	list->frac.image_y = HEIGHT;
+	list->frac.jcr = -0.7;
+	list->frac.jci = 0.27015;
 	list->frac.i_max = 60;
 	list->move.pause = 0;
 	list->move.x0 = 0;
@@ -54,9 +56,9 @@ int		ft_fractal(t_env *list)
 		list->frac.y = 0;
     	while (list->frac.y < list->frac.image_y)
 		{
-			list->frac.c_r = (list->i == 1) ? -0.7 : 1.5 * (list->frac.x - WIDTH / 2) /
+			list->frac.c_r = (list->i == 1) ? list->frac.jcr : 1.5 * (list->frac.x - WIDTH / 2) /
 			(0.5 * list->frac.zoom * WIDTH) + list->frac.moveX;
-			list->frac.c_i = (list->i == 1) ? 0.27015 : (list->frac.y - HEIGHT / 2) /
+			list->frac.c_i = (list->i == 1) ? list->frac.jci : (list->frac.y - HEIGHT / 2) /
 			(0.5 * list->frac.zoom * HEIGHT) + list->frac.moveY;
 			list->frac.z_r = (list->i == 1) ? 1.5 * (list->frac.x - WIDTH / 2) /
 			(0.5 * list->frac.zoom * WIDTH) + list->frac.moveX : 0;
