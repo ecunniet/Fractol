@@ -18,7 +18,8 @@ void	ft_pixel_put_image(t_env *list, int x, int y, int true)
 
 	tmp = (x + (y * WIDTH));
 	if (y >= 0 && x >= 0 && true == 1)
-		*(((int*)list->adi) + tmp) = 0xff23ff + (0x01101100 * (list->frac.i * 255 / list->frac.i_max));
+		*(((int*)list->adi) + tmp) = 0xff23ff +
+	(0x01101100 * (list->frac.i * 255 / list->frac.i_max));
 	else if (true == 0)
 		*(((int*)list->adi) + tmp) = 0x000000;
 }
@@ -32,7 +33,8 @@ void	ft_string_fracal(t_env *list)
 	else
 		mlx_string_put(list->mlx, list->win, 15, 15, 0xffffff, "BURNING SHIP");
 	mlx_string_put(list->mlx, list->win, 15, 35, 0xffffff, "Iteration max = ");
-	mlx_string_put(list->mlx, list->win, 175, 35, 0xffffff, ft_itoa(list->frac.i_max));
+	mlx_string_put(list->mlx, list->win, 175,
+	35, 0xffffff, ft_itoa(list->frac.i_max));
 }
 
 void	ft_init(t_env *list)
