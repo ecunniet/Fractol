@@ -6,7 +6,7 @@
 /*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:55:12 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/04/21 16:55:57 by ecunniet         ###   ########.fr       */
+/*   Updated: 2017/04/24 14:26:47 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 #define TWO 19
 #define THREE 20
 #define PAUSE 36
+#define MUSIC 46
 // mlx defines
 #define KEYPRESSEVENT 2
 #define KEYPRESSMASK (1L << 0)
@@ -46,6 +47,12 @@
 #define POINTERMOTIONMASK (1L << 6)
 #define DESTROYNOTIFY 17
 #define STRUCTURENOTIFYMASK (1L << 17)
+
+typedef struct 		s_music
+{
+	int				music_on;
+	int				pause_on;
+}					t_music;
 
 typedef struct		s_cmd
 {
@@ -94,11 +101,12 @@ typedef struct		s_env
 	char			*adi;
 	double			zoom;
 	int				i;
-	// int				music;
+	t_music			music;
 	t_frac			frac;
 	t_cmd			move;
 }					t_env;
 
+void			ft_music(t_env *list);
 int				ft_loop_ok(t_env *list);
 int				ft_key_press(int keycode, t_env *list);
 int				ft_key_release(int keycode, t_env *list);

@@ -1,3 +1,5 @@
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +8,7 @@
 /*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:41:09 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/04/21 16:58:12 by ecunniet         ###   ########.fr       */
+/*   Updated: 2017/04/24 14:24:03 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +39,19 @@ void	ft_string_fracal(t_env *list)
 	35, 0xffffff, ft_itoa(list->frac.i_max));
 }
 
+void		ft_music(t_env *list)
+{
+	if (list->music.music_on == 1)
+		 system("killall afplay ");
+	if (list->i == 1)
+		system("afplay Julia.mp3 &");
+	if (list->i == 2)
+		system("afplay Mandelbrot.mp3 &");
+	if (list->i == 3)
+		system("afplay Burning_Ship.mp3 &");
+	list->music.music_on = 1;
+}
+
 void	ft_init(t_env *list)
 {
 	list->frac.zoom = 1;
@@ -59,6 +74,7 @@ void	ft_init(t_env *list)
 	list->move.z_less = 0;
 	list->move.i_more = 0;
 	list->move.i_less = 0;
+	ft_music(list);
 }
 
 int		ft_fractal(t_env *list)
@@ -107,6 +123,7 @@ int		ft_draw_pix(t_env *list)
 	list->img_ptr = mlx_new_image(list->mlx, WIDTH, HEIGHT);
 	list->adi = mlx_get_data_addr(list->img_ptr, &list->bpp,
 	&list->size_line, &list->endian);
+	list->music.music_on = 0;
 	ft_init(list);
 	ft_fractal(list);
 	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);

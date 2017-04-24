@@ -6,7 +6,7 @@
 /*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:22:35 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/04/19 16:29:32 by ecunniet         ###   ########.fr       */
+/*   Updated: 2017/04/24 14:12:07 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		ft_exit_cross(t_env *list)
 {
+	system("killall afplay &");
 	exit(EXIT_SUCCESS);
 }
 

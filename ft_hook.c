@@ -6,23 +6,11 @@
 /*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:54:53 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/04/21 19:20:41 by ecunniet         ###   ########.fr       */
+/*   Updated: 2017/04/24 15:46:51 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-/*void		ft_music(t_env *list)
-{
-	if (list->music == 0)
-		system("killall afplay");
-	else if (list->i == 1)
-		system("afplay music.mp3 &");
-	else if (list->i == 2)
-		system("afplay music.mp3 &");
-	else
-		system("afplay music.mp3 &");
-}*/
 
 int			ft_key_funct(int keycode, t_env *list)
 {
@@ -33,15 +21,13 @@ int			ft_key_funct(int keycode, t_env *list)
 	list->i = (keycode == TWO) ? 2 : list->i;
 	list->i = (keycode == THREE) ? 3 : list->i;
 	if (list->i != tmp)
-	{
 		ft_init(list);
-		// ft_music(list);
-	}
+	// if (keycode = )
 	printf("keycode = %d\n", keycode);
 	printf("iteration max = %f\n", list->frac.i_max);
 	if (keycode == PAUSE)
 		list->move.pause = (list->move.pause == 0) ? 1 : 0;
-	(keycode == ESC) ? exit(EXIT_SUCCESS) : 0;
+	(keycode == ESC) ? ft_exit_cross(list) : 0;
 	return (0);
 }
 
