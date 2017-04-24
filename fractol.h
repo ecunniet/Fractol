@@ -106,20 +106,16 @@ typedef struct		s_env
 	t_cmd			move;
 }					t_env;
 
-void			ft_music(t_env *list);
-int				ft_loop_ok(t_env *list);
-int				ft_key_press(int keycode, t_env *list);
-int				ft_key_release(int keycode, t_env *list);
-int				ft_mouse_motion(int x, int y, t_env *list);
-int				ft_button_press(int button, int x, int y, t_env *list);
-int				ft_button_release(int button, int x, int y, t_env *list);
-int				ft_exit_cross(t_env *list);
-void			ft_pixel_put_image(t_env *list, int x, int y, int true);
 void			ft_init(t_env *list);
 int				ft_fractal(t_env *list);
-int				ft_draw_pix(t_env *list);
-int				ft_key_funct(int keycode, t_env *list);
-int				ft_mouse_funct(int button, int x, int y, t_env *list);
+int				ft_loop_ok(t_env *list);
+int				ft_key_release(int keycode, t_env *list);
+int				ft_key_press(int keycode, t_env *list);
+void			ft_music(t_env *list);
+int				ft_button_release(int button, int x, int y, t_env *list);
+int				ft_button_press(int button, int x, int y, t_env *list);
+int				ft_mouse_motion(int x, int y, t_env *list);
+int				ft_exit(t_env *list);
 void			ft_error(int i, char *str);
 
 #endif

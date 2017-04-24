@@ -12,7 +12,23 @@
 
 #include "fractol.h"
 
-int			ft_key_funct(int keycode, t_env *list)
+void		ft_music(t_env *list)
+{
+	if (list->music.music_on == 1)
+	{
+		system("killall -c sh");
+		system("killall afplay");
+	}
+	if (list->i == 1)
+		system("while(true); do afplay Julia.mp3; done &");
+	if (list->i == 2)
+		system("while(true); do afplay Mandelbrot.mp3; done &");
+	if (list->i == 3)
+		system("while(true); do afplay Burning_Ship.mp3; done &");
+	list->music.music_on = 1;
+}
+
+static int	ft_key_funct(int keycode, t_env *list)
 {
 	int		tmp;
 
@@ -36,44 +52,11 @@ int			ft_key_funct(int keycode, t_env *list)
 	printf("iteration max = %f\n", list->frac.i_max);
 	if (keycode == PAUSE)
 		list->move.pause = (list->move.pause == 0) ? 1 : 0;
-	(keycode == ESC) ? ft_exit_cross(list) : 0;
+	(keycode == ESC) ? ft_exit(list) : 0;
 	return (0);
 }
 
-int			ft_mouse_funct(int button, int x, int y, t_env *list)
-{
-	if (button == 2)
-		ft_init(list);
-	if (button == 4)
-	{
-		list->frac.zoom *= pow(1.001, FPS);
-		list->frac.moveY -= ((WIDTH / 2) - y) * (0.00005 * FPS / list->frac.zoom) / 9;
-		list->frac.moveX -= ((HEIGHT / 2) - x) * (0.00005 * FPS / list->frac.zoom) / 9;
-	}
-	if (button == 5)
-	{
-		list->frac.zoom /= pow(1.001, FPS);
-		list->frac.moveY += ((WIDTH / 2) - y) * (0.00005 * FPS / list->frac.zoom) / 9;
-		list->frac.moveX += ((HEIGHT / 2) - x) * (0.00005 * FPS / list->frac.zoom) / 9;
-	}
-	return (0);
-}
-
-int		ft_loop_ok(t_env *list)
-{
-	if (list->frac.i_max > 0)
-		list->frac.i_max += (list->move.i_more - list->move.i_less);
-	if (list->frac.i_max == 0)
-		list->frac.i_max += list->move.i_more;
-	if(list->move.z_more != 0 || list->move.z_less != 0)
-		list->frac.zoom *= ((list->move.z_more * pow(1.001, FPS)) + (list->move.z_less / pow(1.001, FPS)));
-	list->frac.moveY += (list->move.down - list->move.up) * (0.0013 * FPS / list->frac.zoom);
-	list->frac.moveX += (list->move.right - list->move.left) * (0.0013 * FPS / list->frac.zoom);
-	ft_fractal(list);
-	return (0);
-}
-
-int		ft_key_press(int keycode, t_env *list)
+int			ft_key_press(int keycode, t_env *list)
 {
 	list->move.i_more = (keycode == I) ? 1 : 0;
 	list->move.i_less = (keycode == O) ? 1 : 0;
@@ -87,7 +70,7 @@ int		ft_key_press(int keycode, t_env *list)
 	return (0);
 }
 
-int		ft_key_release(int keycode, t_env *list)
+int			ft_key_release(int keycode, t_env *list)
 {
 	list->move.i_more = 0;
 	list->move.i_less = 0;
@@ -100,40 +83,19 @@ int		ft_key_release(int keycode, t_env *list)
 	return (0);
 }
 
-int		ft_mouse_motion(int x, int y, t_env *list)
+int			ft_loop_ok(t_env *list)
 {
-	if (list->move.on == 1)
-	{
-		list->frac.moveY += (list->move.y0 - y) * (0.00005 * FPS / list->frac.zoom);
-		list->frac.moveX += (list->move.x0 - x) * (0.00005 * FPS / list->frac.zoom);
-		list->move.x0 = x;
-		list->move.y0 = y;
-	}
-	else if (list->i == 1 && list->move.pause == 0)
-	{
-		list->frac.jci = y * (0.00002 * FPS);
-		list->frac.jcr = x * (0.00002 * FPS);
-	}
-	return (0);
-}
-
-int		ft_button_press(int button, int x, int y, t_env *list)
-{
-	printf("button = %d et x = %d et y = %d\n", button, x, y);
-	if (button == 1)
-	{
-		list->move.x0 = x;
-		list->move.y0 = y;
-		list->move.on = 1;
-	}
-	ft_mouse_funct(button, x, y, list);
-	return (0);
-}
-
-int		ft_button_release(int button, int x, int y, t_env *list)
-{
-	printf("button = %d et x = %d et y = %d\n", button, x, y);
-	if (button == 1)
-		list->move.on = 0;
+	if (list->frac.i_max > 0)
+		list->frac.i_max += (list->move.i_more - list->move.i_less);
+	if (list->frac.i_max == 0)
+		list->frac.i_max += list->move.i_more;
+	if (list->move.z_more != 0 || list->move.z_less != 0)
+		list->frac.zoom *= ((list->move.z_more * pow(1.001, FPS))
+		+ (list->move.z_less / pow(1.001, FPS)));
+	list->frac.moveY += (list->move.down - list->move.up) *
+	(0.0013 * FPS / list->frac.zoom);
+	list->frac.moveX += (list->move.right - list->move.left) *
+	(0.0013 * FPS / list->frac.zoom);
+	ft_fractal(list);
 	return (0);
 }

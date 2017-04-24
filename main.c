@@ -12,7 +12,32 @@
 
 #include "fractol.h"
 
-void	ft_verif(char *fract, t_env *list)
+static int		ft_draw_pix(t_env *list)
+{
+	list->mlx = mlx_init();
+	list->win = mlx_new_window(list->mlx, WIDTH, HEIGHT, "mlx_42");
+	list->img_ptr = mlx_new_image(list->mlx, WIDTH, HEIGHT);
+	list->adi = mlx_get_data_addr(list->img_ptr, &list->bpp,
+	&list->size_line, &list->endian);
+	list->music.music_on = 0;
+	ft_init(list);
+	ft_fractal(list);
+	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);
+	mlx_hook(list->win, KEYPRESSEVENT, KEYPRESSMASK, &ft_key_press, list);
+	mlx_hook(list->win, KEYRELEASEEVENT, KEYRELEASEMASK,
+	&ft_key_release, list);
+	mlx_hook(list->win, MOTIONNOTIFY, POINTERMOTIONMASK,
+	&ft_mouse_motion, list);
+	mlx_hook(list->win, BUTTONPRESS, BUTTONPRESSMASK, &ft_button_press, list);
+	mlx_hook(list->win, BUTTONRELEASE, BUTTONRELEASEMASK,
+	&ft_button_release, list);
+	mlx_hook(list->win, DESTROYNOTIFY, STRUCTURENOTIFYMASK, &ft_exit, list);
+	mlx_loop_hook(list->mlx, &ft_loop_ok, list);
+	mlx_loop(list->mlx);
+	return (0);
+}
+
+static void		ft_verif(char *fract, t_env *list)
 {
 	list->i = (ft_strcmp(fract, "Julia") == 0) ? 1 : 0;
 	list->i = (ft_strcmp(fract, "Mandelbrot") == 0
@@ -23,7 +48,7 @@ void	ft_verif(char *fract, t_env *list)
 		ft_error(1, fract);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_env	list;
 

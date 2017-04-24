@@ -18,8 +18,8 @@ POINTH = fractol.h \
 LIB = libft/libft.a
 MLX = -L minilibx_macos/
 CC = gcc
-SRC = ft_error.c algo_fractal.c main.c ft_hook.c
-
+SRC = ft_error.c algo_fractal.c main.c ft_hook_keyboard.c \
+	ft_hook_mouse.c
 OBJ= $(SRC:%.c=%.o)
 
 all: $(NAME) 
@@ -45,6 +45,6 @@ re: fclean
 
 norme:
 	@norminette $(SRC) $(POINTH)
-	@$(MAKE) norme -C libft/
+	@norminette libft/
 
 .PHONY: all clean fclean re norme

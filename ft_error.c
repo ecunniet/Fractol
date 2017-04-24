@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-int		ft_exit_cross(t_env *list)
+int			ft_exit(t_env *list)
 {
 	system("killall -c sh");
 	system("killall afplay");
@@ -27,6 +27,7 @@ void		ft_error(int i, char *str)
 		ft_putstr(str);
 		ft_putstr(" doesn't exist.\n");
 	}
-	ft_putstr("Usage: ./fractol fractal_name:\n-Julia\n-Mandelbrot\n-Burning Ship\n");
+	ft_putstr("Usage: ./fractol fractal_name:\n\
+-Julia\n-Mandelbrot\n-Burning Ship\n");
 	exit(EXIT_FAILURE);
 }

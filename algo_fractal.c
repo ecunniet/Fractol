@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void	ft_pixel_put_image(t_env *list, int x, int y, int true)
+static void		ft_pixel_put_image(t_env *list, int x, int y, int true)
 {
 	int tmp;
 
@@ -24,7 +24,7 @@ void	ft_pixel_put_image(t_env *list, int x, int y, int true)
 		*(((int*)list->adi) + tmp) = 0x000000;
 }
 
-void	ft_string_fracal(t_env *list)
+static void		ft_string_fracal(t_env *list)
 {
 	if (list->i == 1)
 		mlx_string_put(list->mlx, list->win, 15, 15, 0xffffff, "JUILA");
@@ -37,23 +37,7 @@ void	ft_string_fracal(t_env *list)
 	35, 0xffffff, ft_itoa(list->frac.i_max));
 }
 
-void		ft_music(t_env *list)
-{
-	if (list->music.music_on == 1)
-	{
-		system("killall -c sh");
-		system("killall afplay");
-	}
-	if (list->i == 1)
-		system("while(true); do afplay Julia.mp3; done &");
-	if (list->i == 2)
-		system("while(true); do afplay Mandelbrot.mp3; done &");
-	if (list->i == 3)
-		system("while(true); do afplay Burning_Ship.mp3; done &");
-	list->music.music_on = 1;
-}
-
-void	ft_init(t_env *list)
+void			ft_init(t_env *list)
 {
 	list->frac.zoom = 1;
 	list->frac.moveX = (list->i == 1) ? 0 : -0.5;
@@ -79,63 +63,55 @@ void	ft_init(t_env *list)
 	ft_music(list);
 }
 
-int		ft_fractal(t_env *list)
+static void		ft_in_fractal(t_env *list, int i)
+{
+	if (i == 1)
+	{
+		list->frac.c_r = (list->i == 1) ? list->frac.jcr : 1.5 *
+		(list->frac.x - WIDTH / 2) / (0.5 *
+		list->frac.zoom * WIDTH) + list->frac.moveX;
+		list->frac.c_i = (list->i == 1) ? list->frac.jci :
+		(list->frac.y - HEIGHT / 2) / (0.5 *
+		list->frac.zoom * HEIGHT) + list->frac.moveY;
+		list->frac.z_r = (list->i == 1) ? 1.5 * (list->frac.x - WIDTH / 2) /
+		(0.5 * list->frac.zoom * WIDTH) + list->frac.moveX : 0;
+		list->frac.z_i = (list->i == 1) ? (list->frac.y - HEIGHT / 2) /
+		(0.5 * list->frac.zoom * HEIGHT) + list->frac.moveY : 0;
+		list->frac.i = 0;
+	}
+	else
+	{
+		list->frac.tmp = list->frac.z_r;
+		list->frac.z_r = list->frac.z_r * list->frac.z_r
+		- list->frac.z_i * list->frac.z_i + list->frac.c_r;
+		list->frac.z_i = (list->i == 3) ? 2 *
+		fabs(list->frac.z_i * list->frac.tmp) + list->frac.c_i : 2
+		* list->frac.z_i * list->frac.tmp + list->frac.c_i;
+		list->frac.i++;
+	}
+}
+
+int				ft_fractal(t_env *list)
 {
 	list->frac.x = 0;
 	while (list->frac.x < list->frac.image_x)
 	{
 		list->frac.y = 0;
-    	while (list->frac.y < list->frac.image_y)
+		while (list->frac.y < list->frac.image_y)
 		{
-			list->frac.c_r = (list->i == 1) ? list->frac.jcr : 1.5 * (list->frac.x - WIDTH / 2) /
-			(0.5 * list->frac.zoom * WIDTH) + list->frac.moveX;
-			list->frac.c_i = (list->i == 1) ? list->frac.jci : (list->frac.y - HEIGHT / 2) /
-			(0.5 * list->frac.zoom * HEIGHT) + list->frac.moveY;
-			list->frac.z_r = (list->i == 1) ? 1.5 * (list->frac.x - WIDTH / 2) /
-			(0.5 * list->frac.zoom * WIDTH) + list->frac.moveX : 0;
-			list->frac.z_i = (list->i == 1) ? (list->frac.y - HEIGHT / 2) /
-			(0.5 * list->frac.zoom * HEIGHT) + list->frac.moveY : 0;
-			list->frac.i = 0;
-        	while (list->frac.z_r * list->frac.z_r + list->frac.z_i * list->frac.z_i < 4 && list->frac.i < list->frac.i_max)
-			{
-				list->frac.tmp = list->frac.z_r;
- 	        	list->frac.z_r = list->frac.z_r * list->frac.z_r
- 	        	- list->frac.z_i * list->frac.z_i + list->frac.c_r;
-        	    list->frac.z_i = (list->i == 3) ? 2 * fabs(list->frac.z_i * list->frac.tmp)
-        	    + list->frac.c_i : 2 * list->frac.z_i * list->frac.tmp + list->frac.c_i;
-           	 	list->frac.i++;
-			}
-            if (list->frac.i != list->frac.i_max)
+			ft_in_fractal(list, 1);
+			while (list->frac.z_r * list->frac.z_r + list->frac.z_i *
+			list->frac.z_i < 4 && list->frac.i < list->frac.i_max)
+				ft_in_fractal(list, 2);
+			if (list->frac.i != list->frac.i_max)
 				ft_pixel_put_image(list, list->frac.x, list->frac.y, 1);
 			else
 				ft_pixel_put_image(list, list->frac.x, list->frac.y, 0);
 			list->frac.y++;
-    	}
+		}
 		list->frac.x++;
 	}
 	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);
 	ft_string_fracal(list);
-	return (0);
-}
-
-int		ft_draw_pix(t_env *list)
-{
-	list->mlx = mlx_init();
-	list->win = mlx_new_window(list->mlx, WIDTH, HEIGHT, "mlx_42");
-	list->img_ptr = mlx_new_image(list->mlx, WIDTH, HEIGHT);
-	list->adi = mlx_get_data_addr(list->img_ptr, &list->bpp,
-	&list->size_line, &list->endian);
-	list->music.music_on = 0;
-	ft_init(list);
-	ft_fractal(list);
-	mlx_put_image_to_window(list->mlx, list->win, list->img_ptr, 0, 0);
-	mlx_hook(list->win, KEYPRESSEVENT, KEYPRESSMASK, &ft_key_press, list);
-	mlx_hook(list->win, KEYRELEASEEVENT, KEYRELEASEMASK, &ft_key_release, list);
-	mlx_hook(list->win, MOTIONNOTIFY, POINTERMOTIONMASK, &ft_mouse_motion, list);
-	mlx_hook(list->win, BUTTONPRESS, BUTTONPRESSMASK, &ft_button_press, list);
-	mlx_hook(list->win, BUTTONRELEASE, BUTTONRELEASEMASK, &ft_button_release, list);
-	mlx_hook(list->win, DESTROYNOTIFY, STRUCTURENOTIFYMASK, &ft_exit_cross, list);
-	mlx_loop_hook(list->mlx, &ft_loop_ok, list);
-	mlx_loop(list->mlx);
 	return (0);
 }
