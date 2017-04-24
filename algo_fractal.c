@@ -42,9 +42,9 @@ void	ft_string_fracal(t_env *list)
 void		ft_music(t_env *list)
 {
 	if (list->music.music_on == 1)
-		 system("killall afplay ");
+		system("killall afplay");
 	if (list->i == 1)
-		system("afplay Julia.mp3 &");
+		printf(" Juila son = %d\n", system("while 1; afplay Julia.mp3 &"));
 	if (list->i == 2)
 		system("afplay Mandelbrot.mp3 &");
 	if (list->i == 3)
@@ -74,6 +74,7 @@ void	ft_init(t_env *list)
 	list->move.z_less = 0;
 	list->move.i_more = 0;
 	list->move.i_less = 0;
+	list->music.pause_on = 0;
 	ft_music(list);
 }
 

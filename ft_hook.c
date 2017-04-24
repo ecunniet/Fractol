@@ -22,7 +22,16 @@ int			ft_key_funct(int keycode, t_env *list)
 	list->i = (keycode == THREE) ? 3 : list->i;
 	if (list->i != tmp)
 		ft_init(list);
-	// if (keycode = )
+	if (keycode == MUSIC && list->music.pause_on == 0)
+	{
+		system("killall -STOP afplay");
+		list->music.pause_on = 1;
+	}
+	else if (keycode == MUSIC && list->music.pause_on == 1)
+	{
+		system("killall -CONT afplay");
+		list->music.pause_on = 0;
+	}
 	printf("keycode = %d\n", keycode);
 	printf("iteration max = %f\n", list->frac.i_max);
 	if (keycode == PAUSE)
@@ -38,14 +47,14 @@ int			ft_mouse_funct(int button, int x, int y, t_env *list)
 	if (button == 4)
 	{
 		list->frac.zoom *= pow(1.001, FPS);
-		list->frac.moveY -= ((WIDTH / 2) - y) * (0.00003 * FPS / list->frac.zoom) / 8;
-		list->frac.moveX -= ((HEIGHT / 2) - x) * (0.00003 * FPS / list->frac.zoom) / 8;
+		list->frac.moveY -= ((WIDTH / 2) - y) * (0.00005 * FPS / list->frac.zoom) / 9;
+		list->frac.moveX -= ((HEIGHT / 2) - x) * (0.00005 * FPS / list->frac.zoom) / 9;
 	}
 	if (button == 5)
 	{
 		list->frac.zoom /= pow(1.001, FPS);
-		list->frac.moveY += ((WIDTH / 2) - y) * (0.00003 * FPS / list->frac.zoom) / 10;
-		list->frac.moveX += ((HEIGHT / 2) - x) * (0.00003 * FPS / list->frac.zoom) / 10;
+		list->frac.moveY += ((WIDTH / 2) - y) * (0.00005 * FPS / list->frac.zoom) / 9;
+		list->frac.moveX += ((HEIGHT / 2) - x) * (0.00005 * FPS / list->frac.zoom) / 9;
 	}
 	return (0);
 }
@@ -60,6 +69,7 @@ int		ft_loop_ok(t_env *list)
 		list->frac.zoom *= ((list->move.z_more * pow(1.001, FPS)) + (list->move.z_less / pow(1.001, FPS)));
 	list->frac.moveY += (list->move.down - list->move.up) * (0.0013 * FPS / list->frac.zoom);
 	list->frac.moveX += (list->move.right - list->move.left) * (0.0013 * FPS / list->frac.zoom);
+	// printf("retour du ps = %d\n", system("ps -c | grep 'afplay'"));
 	ft_fractal(list);
 	return (0);
 }
