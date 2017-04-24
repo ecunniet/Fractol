@@ -69,7 +69,6 @@ int		ft_loop_ok(t_env *list)
 		list->frac.zoom *= ((list->move.z_more * pow(1.001, FPS)) + (list->move.z_less / pow(1.001, FPS)));
 	list->frac.moveY += (list->move.down - list->move.up) * (0.0013 * FPS / list->frac.zoom);
 	list->frac.moveX += (list->move.right - list->move.left) * (0.0013 * FPS / list->frac.zoom);
-	// printf("retour du ps = %d\n", system("ps -c | grep 'afplay'"));
 	ft_fractal(list);
 	return (0);
 }

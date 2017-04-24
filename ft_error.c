@@ -14,6 +14,7 @@
 
 int		ft_exit_cross(t_env *list)
 {
+	system("killall -c sh");
 	system("killall afplay");
 	exit(EXIT_SUCCESS);
 }

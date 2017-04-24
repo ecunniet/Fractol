@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -42,13 +40,16 @@ void	ft_string_fracal(t_env *list)
 void		ft_music(t_env *list)
 {
 	if (list->music.music_on == 1)
+	{
+		system("killall -c sh");
 		system("killall afplay");
+	}
 	if (list->i == 1)
-		printf(" Juila son = %d\n", system("while 1; afplay Julia.mp3 &"));
+		system("while(true); do afplay Julia.mp3; done &");
 	if (list->i == 2)
-		system("afplay Mandelbrot.mp3 &");
+		system("while(true); do afplay Mandelbrot.mp3; done &");
 	if (list->i == 3)
-		system("afplay Burning_Ship.mp3 &");
+		system("while(true); do afplay Burning_Ship.mp3; done &");
 	list->music.music_on = 1;
 }
 
