@@ -6,7 +6,7 @@
 #    By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/14 23:03:00 by ecunniet          #+#    #+#              #
-#    Updated: 2017/04/25 13:12:05 by ecunniet         ###   ########.fr        #
+#    Updated: 2017/04/25 13:52:33 by ecunniet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,15 +22,14 @@ SRC = ft_error.c ft_algo_fractal.c main.c ft_hook_keyboard.c \
 	ft_hook_mouse.c
 OBJ= $(SRC:%.c=%.o)
 
-all: $(NAME) 
+all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(MAKE) -C libft/
-	$(CC) -c $(SRC) $(INC)
+	make -C libft
 	$(CC) $(CFLAGS) $(OBJ) $(INC) $(LIB) $(MLX) -o $(NAME)
 
 %.o: %.c
-	$(CC) -c $<
+	$(CC) -c $< $(INC)
 
 clean:
 	rm -f $(OBJ)
