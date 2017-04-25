@@ -6,7 +6,7 @@
 #    By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/14 23:03:00 by ecunniet          #+#    #+#              #
-#    Updated: 2017/04/25 12:00:59 by ecunniet         ###   ########.fr        #
+#    Updated: 2017/04/25 13:12:05 by ecunniet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ= $(SRC:%.c=%.o)
 
 all: $(NAME) 
 
-$(NAME):
+$(NAME): $(OBJ)
 	$(MAKE) -C libft/
 	$(CC) -c $(SRC) $(INC)
 	$(CC) $(CFLAGS) $(OBJ) $(INC) $(LIB) $(MLX) -o $(NAME)
