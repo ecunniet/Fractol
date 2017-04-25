@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hook.c                                          :+:      :+:    :+:   */
+/*   ft_hook_keyboard.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ecunniet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:54:53 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/04/24 15:46:51 by ecunniet         ###   ########.fr       */
+/*   Created: 2017/04/25 12:02:04 by ecunniet          #+#    #+#             */
+/*   Updated: 2017/04/25 12:02:14 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static int	ft_key_funct(int keycode, t_env *list)
 		system("killall -CONT afplay");
 		list->music.pause_on = 0;
 	}
-	printf("keycode = %d\n", keycode);
-	printf("iteration max = %f\n", list->frac.i_max);
 	if (keycode == PAUSE)
 		list->move.pause = (list->move.pause == 0) ? 1 : 0;
 	(keycode == ESC) ? ft_exit(list) : 0;
@@ -92,9 +90,9 @@ int			ft_loop_ok(t_env *list)
 	if (list->move.z_more != 0 || list->move.z_less != 0)
 		list->frac.zoom *= ((list->move.z_more * pow(1.001, FPS))
 		+ (list->move.z_less / pow(1.001, FPS)));
-	list->frac.moveY += (list->move.down - list->move.up) *
+	list->frac.movey += (list->move.down - list->move.up) *
 	(0.0013 * FPS / list->frac.zoom);
-	list->frac.moveX += (list->move.right - list->move.left) *
+	list->frac.movex += (list->move.right - list->move.left) *
 	(0.0013 * FPS / list->frac.zoom);
 	ft_fractal(list);
 	return (0);

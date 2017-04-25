@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algo_fractal.c                                     :+:      :+:    :+:   */
+/*   ft_algo_fractal.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ecunniet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:41:09 by ecunniet          #+#    #+#             */
-/*   Updated: 2017/04/24 14:24:03 by ecunniet         ###   ########.fr       */
+/*   Created: 2017/04/25 12:01:12 by ecunniet          #+#    #+#             */
+/*   Updated: 2017/04/25 12:01:26 by ecunniet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void		ft_pixel_put_image(t_env *list, int x, int y, int true)
 
 static void		ft_string_fracal(t_env *list)
 {
+	char	*str;
+
 	if (list->i == 1)
 		mlx_string_put(list->mlx, list->win, 15, 15, 0xffffff, "JUILA");
 	else if (list->i == 2)
@@ -33,15 +35,17 @@ static void		ft_string_fracal(t_env *list)
 	else
 		mlx_string_put(list->mlx, list->win, 15, 15, 0xffffff, "BURNING SHIP");
 	mlx_string_put(list->mlx, list->win, 15, 35, 0xffffff, "Iteration max = ");
+	str = ft_itoa(list->frac.i_max);
 	mlx_string_put(list->mlx, list->win, 175,
-	35, 0xffffff, ft_itoa(list->frac.i_max));
+	35, 0xffffff, str);
+	free(str);
 }
 
 void			ft_init(t_env *list)
 {
 	list->frac.zoom = 1;
-	list->frac.moveX = (list->i == 1) ? 0 : -0.5;
-	list->frac.moveY = (list->i == 3) ? -0.5 : 0;
+	list->frac.movex = (list->i == 1) ? 0 : -0.5;
+	list->frac.movey = (list->i == 3) ? -0.5 : 0;
 	list->frac.image_x = WIDTH;
 	list->frac.image_y = HEIGHT;
 	list->frac.jcr = -0.7;
@@ -69,14 +73,14 @@ static void		ft_in_fractal(t_env *list, int i)
 	{
 		list->frac.c_r = (list->i == 1) ? list->frac.jcr : 1.5 *
 		(list->frac.x - WIDTH / 2) / (0.5 *
-		list->frac.zoom * WIDTH) + list->frac.moveX;
+		list->frac.zoom * WIDTH) + list->frac.movex;
 		list->frac.c_i = (list->i == 1) ? list->frac.jci :
 		(list->frac.y - HEIGHT / 2) / (0.5 *
-		list->frac.zoom * HEIGHT) + list->frac.moveY;
+		list->frac.zoom * HEIGHT) + list->frac.movey;
 		list->frac.z_r = (list->i == 1) ? 1.5 * (list->frac.x - WIDTH / 2) /
-		(0.5 * list->frac.zoom * WIDTH) + list->frac.moveX : 0;
+		(0.5 * list->frac.zoom * WIDTH) + list->frac.movex : 0;
 		list->frac.z_i = (list->i == 1) ? (list->frac.y - HEIGHT / 2) /
-		(0.5 * list->frac.zoom * HEIGHT) + list->frac.moveY : 0;
+		(0.5 * list->frac.zoom * HEIGHT) + list->frac.movey : 0;
 		list->frac.i = 0;
 	}
 	else

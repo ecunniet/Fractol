@@ -6,7 +6,7 @@
 #    By: ecunniet <ecunniet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/14 23:03:00 by ecunniet          #+#    #+#              #
-#    Updated: 2017/04/19 16:30:53 by ecunniet         ###   ########.fr        #
+#    Updated: 2017/04/25 12:00:59 by ecunniet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ POINTH = fractol.h \
 LIB = libft/libft.a
 MLX = -L minilibx_macos/
 CC = gcc
-SRC = ft_error.c algo_fractal.c main.c ft_hook_keyboard.c \
+SRC = ft_error.c ft_algo_fractal.c main.c ft_hook_keyboard.c \
 	ft_hook_mouse.c
 OBJ= $(SRC:%.c=%.o)
 
