@@ -29,7 +29,7 @@ static void		ft_string_fracal(t_env *list)
 	char	*str;
 
 	if (list->i == 1)
-		mlx_string_put(list->mlx, list->win, 15, 15, 0xffffff, "JUILA");
+		mlx_string_put(list->mlx, list->win, 15, 15, 0xffffff, "JULIA");
 	else if (list->i == 2)
 		mlx_string_put(list->mlx, list->win, 15, 15, 0xffffff, "MENDELBROT");
 	else
